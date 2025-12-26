@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Swingolf</string>
+    <string name="add_user">Player</string>
+    <string name="create_game">Game</string>
+    <string name="show_all_games">All Games</string>
+    <string name="back_btn">Back</string>
+    <!-- Create Player -->
+    <string name="create_player_headline">Create a new Player</string>
+    <string name="player_name_edit_text">Player name</string>
+    <string name="create_player">Save</string>
+    <string name="player_name_error">The name should not be empty!</string>
+    <string name="player_name_success">Successfully saved the Player</string>
+    <!-- Create Game -->
+    <string name="start_game">Start</string>
+    <string name="game_name_edit_text">Game name</string>
+    <string name="date_edit_text">Date</string>
+    <string name="holes_edit_text">Hole count</string>
+    <!-- Create Tables -->
+    <string name="course">Course</string>
+    <string name="total">Total</string>
+    <!-- SharedPreferences -->
+    <string name="preferences">preferences</string>
+    <string name="player_count">player_count</string>
+    <string name="player_name">player_</string>
+</resources>
