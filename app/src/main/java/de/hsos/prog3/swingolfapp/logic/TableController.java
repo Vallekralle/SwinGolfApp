@@ -3,13 +3,13 @@ package de.hsos.prog3.swingolfapp.logic;
 import android.app.Activity;
 import android.graphics.Color;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.Gravity;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -95,6 +95,23 @@ public class TableController {
             resultRow.addView(resultText);
             players[i].setResultText(resultText);
         }
+    }
+
+    public void saveGame() {
+        if(isSaveable()) {
+
+        } else {
+            Toast.makeText(activity, activity.getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isSaveable() {
+        for(Player player : players) {
+            if(player.hasEmptyFields()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

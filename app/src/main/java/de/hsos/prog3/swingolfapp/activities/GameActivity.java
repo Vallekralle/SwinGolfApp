@@ -29,8 +29,14 @@ public class GameActivity extends GolfActivity {
 
     private void initButton() {
         Button gameBackBtn = findViewById(R.id.gameBackBtn);
+        Button saveGameBtn = findViewById(R.id.saveGameBtn);
+
         gameBackBtn.setOnClickListener(v -> {
             startActivity(GameActivity.this, MainActivity.class);
+        });
+
+        saveGameBtn.setOnClickListener(v -> {
+            tableController.saveGame();
         });
     }
 }

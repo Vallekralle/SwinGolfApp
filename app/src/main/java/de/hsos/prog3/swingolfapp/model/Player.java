@@ -1,5 +1,6 @@
 package de.hsos.prog3.swingolfapp.model;
 
+import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -53,5 +54,19 @@ public class Player {
             }
             resultText.setText(String.valueOf(count));
         }
+    }
+
+    public boolean hasEmptyFields() {
+        for(EditText editText : editTextList) {
+            String value = editText.getText().toString();
+            try {
+                if(value.isEmpty() || Integer.parseInt(value) < 1) {
+                    return true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return false;
     }
 }
