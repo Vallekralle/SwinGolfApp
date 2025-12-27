@@ -8,6 +8,8 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
+
 public class GolfActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,14 @@ public class GolfActivity extends AppCompatActivity {
 
     public static void startActivity(Activity currentActivity, Class<?> nextActivity) {
         Intent intent = new Intent(currentActivity, nextActivity);
+        currentActivity.startActivity(intent);
+        currentActivity.finish();
+    }
+
+    public static void startActivity(Activity currentActivity, Class<?> nextActivity, Serializable extra) {
+        Intent intent = new Intent(currentActivity, nextActivity);
+        // Add extras to the intent
+        intent.putExtra("extra", extra);
         currentActivity.startActivity(intent);
         currentActivity.finish();
     }

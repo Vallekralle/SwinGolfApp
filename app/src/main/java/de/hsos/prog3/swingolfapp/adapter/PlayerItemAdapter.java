@@ -5,21 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
 
 import de.hsos.prog3.swingolfapp.R;
-import de.hsos.prog3.swingolfapp.model.NameHolder;
+import de.hsos.prog3.swingolfapp.model.PlayerInfoHolder;
 
-public class PlayerItemAdapter extends ArrayAdapter<NameHolder> {
-    public PlayerItemAdapter(Context context, int resource, List<NameHolder> nameHolderList) {
-        super(context, resource, nameHolderList);
+public class PlayerItemAdapter extends ArrayAdapter<PlayerInfoHolder> {
+    public PlayerItemAdapter(Context context, int resource, List<PlayerInfoHolder> playerInfoHolderList) {
+        super(context, resource, playerInfoHolderList);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NameHolder nameHolder = getItem(position);
+        PlayerInfoHolder playerInfoHolder = getItem(position);
 
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
@@ -28,7 +29,12 @@ public class PlayerItemAdapter extends ArrayAdapter<NameHolder> {
         }
 
         TextView playerName = convertView.findViewById(R.id.playerItemText);
-        playerName.setText(nameHolder.name());
+        CheckBox checkBox = convertView.findViewById(R.id.playerItemCheckBox);
+
+        playerName.setText(playerInfoHolder.getName());
+        checkBox.setOnClickListener(v -> {
+            playerInfoHolder.setChecked();
+        });
 
         return convertView;
     }

@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#6c9768"
     tools:context=".activities.GameHistoryActivity">
 
     <Button
@@ -13,7 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/btn_bg"
+        android:fontFamily="sans-serif-light"
         android:text="@string/back_btn"
+        android:textSize="24sp"
         app:icon="@drawable/back_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

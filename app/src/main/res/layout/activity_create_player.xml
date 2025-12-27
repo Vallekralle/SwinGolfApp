@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#6c9768"
     tools:context=".activities.CreatePlayerActivity">
 
     <Button
@@ -26,10 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/black"
         android:ems="10"
         android:hint="@string/player_name_edit_text"
         android:inputType="text"
         android:maxLength="16"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -61,6 +64,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:text="@string/create_player_headline"
+        android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/playerNameEditText"
         app:layout_constraintEnd_toEndOf="@+id/playerNameEditText"

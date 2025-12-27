@@ -5,20 +5,28 @@ import android.widget.Button;
 
 import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.logic.TableController;
+import de.hsos.prog3.swingolfapp.model.GameInfo;
 import de.hsos.prog3.swingolfapp.model.TableInfo;
 
 public class GameActivity extends GolfActivity {
     private TableController tableController;
 
-    /// ONLY TEMPORARILY
-    private String[] playerNames = {"Dalina", "Valentin", "Peter", "Joel"};
-    private String courseName = "Norderney";
-    private int courseCount = 18;
+    private String[] playerNames;
+    private String courseName;
+    private int courseCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            GameInfo gameInfo = (GameInfo) extras.getSerializable("extra");
+            playerNames = gameInfo.players().toArray(new String[0]);
+            courseName = gameInfo.gameName();
+            courseCount = gameInfo.holeCount();
+        }
 
         initButton();
 

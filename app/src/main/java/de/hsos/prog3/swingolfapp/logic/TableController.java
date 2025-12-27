@@ -49,13 +49,21 @@ public class TableController {
     }
 
     /**
-    * Start function
+    * [PUBLIC] Build and Interaction
     * */
 
     public void displayGameTable() {
         displayNameRow(tableInfo.courseName(), tableInfo.playerNames());
         displayInputRows(tableInfo.courseCount(), tableInfo.playerNames());
         displayResultRow(tableInfo.playerNames());
+    }
+
+    public void saveGame() {
+        if(isSaveable()) {
+
+        } else {
+            Toast.makeText(activity, activity.getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -97,13 +105,9 @@ public class TableController {
         }
     }
 
-    public void saveGame() {
-        if(isSaveable()) {
-
-        } else {
-            Toast.makeText(activity, activity.getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
-        }
-    }
+    /**
+    * Game save
+    * */
 
     private boolean isSaveable() {
         for(Player player : players) {

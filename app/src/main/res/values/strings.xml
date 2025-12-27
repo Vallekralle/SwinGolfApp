@@ -15,11 +15,15 @@
     <string name="game_name_edit_text">Game name</string>
     <string name="date_edit_text">Date</string>
     <string name="holes_edit_text">Hole count</string>
+    <string name="missing_game_name">The game name should not be empty!</string>
+    <string name="missing_hole_count">The hole count should not be empty!</string>
+    <string name="hole_count_span_error">The hole count should be between 1 and 18!</string>
+    <string name="missing_player_selection">You must choose at least one player form the list!</string>
     <!-- Create Tables -->
     <string name="course">Course</string>
     <string name="total">Total</string>
     <string name="save_game">Save Game</string>
-    <string name="empty_fields">All fields must contain numbers from 1–99.</string>
+    <string name="empty_fields">All fields must contain numbers between 1 and 99.</string>
     <!-- SharedPreferences -->
     <string name="preferences">preferences</string>
     <string name="player_count">player_count</string>
