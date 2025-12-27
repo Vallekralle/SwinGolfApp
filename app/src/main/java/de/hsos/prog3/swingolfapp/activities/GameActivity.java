@@ -44,6 +44,7 @@ public class GameActivity extends GolfActivity {
         });
 
         saveGameBtn.setOnClickListener(v -> {
+            saveGameBtn.setEnabled(false);
             tableController.saveGame();
         });
     }

@@ -3,6 +3,7 @@ package de.hsos.prog3.swingolfapp.logic;
 import android.app.Activity;
 import android.graphics.Color;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -13,11 +14,17 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.model.Player;
 import de.hsos.prog3.swingolfapp.model.TableInfo;
+import de.hsos.prog3.swingolfapp.model.gson.GameGson;
 
 public class TableController {
     public static final int CELL_WIDTH = 500;
@@ -60,7 +67,14 @@ public class TableController {
 
     public void saveGame() {
         if(isSaveable()) {
-
+            GameGson gameGson = new GameGson(
+                    tableInfo.courseName(),
+                    tableInfo.courseCount(),
+                    getAllAvg(),
+                    Arrays.stream(players).map(Player::toGson).collect(Collectors.toList())
+            );
+            String serializedGame = new Gson().toJson(gameGson);
+            Log.i("GAME_AS_JSON", serializedGame);
         } else {
             Toast.makeText(activity, activity.getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
         }
@@ -76,7 +90,7 @@ public class TableController {
 
         // Iterate through all players and add them to the row
         for(int i = 0; i < playerNames.length; i++) {
-            players[i] = new Player(tableInfo.courseCount());
+            players[i] = new Player(playerNames[i], tableInfo.courseCount());
             playerNameRow.addView(createTextView(playerNames[i]));
         }
     }
@@ -116,6 +130,16 @@ public class TableController {
             }
         }
         return true;
+    }
+
+    private float getAllAvg() {
+        float avgCount = 0;
+
+        for (Player player : players) {
+            avgCount += player.getAvgShoots();
+        }
+
+        return avgCount / players.length;
     }
 
     /**

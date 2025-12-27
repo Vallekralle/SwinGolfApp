@@ -1,6 +1,5 @@
 package de.hsos.prog3.swingolfapp.model;
 
-import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -8,12 +7,24 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.hsos.prog3.swingolfapp.model.gson.PlayerGson;
+
 public class Player {
-    private ArrayList<EditText> editTextList;
+    private final ArrayList<EditText> editTextList;
     private TextView resultText;
 
-    public Player(int courseCount) {
+    private final String name;
+    private final int courseCount;
+
+    private int totalShoots, min, max;
+
+    public Player(String name, int courseCount) {
+        this.name = name;
+        this.courseCount = courseCount;
+
         editTextList = new ArrayList<>(courseCount);
+        max = 0;
+        min = 100;
     }
 
     public void addEditText(EditText editText) {
@@ -41,21 +52,6 @@ public class Player {
         this.resultText = resultText;
     }
 
-    private void changeResultText() {
-        if(resultText != null) {
-            int count = 0;
-            for(EditText editText : editTextList) {
-                try {
-                    int value = Integer.parseInt(editText.getText().toString());
-                    count += value;
-                } catch (NumberFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-            resultText.setText(String.valueOf(count));
-        }
-    }
-
     public boolean hasEmptyFields() {
         for(EditText editText : editTextList) {
             String value = editText.getText().toString();
@@ -68,5 +64,41 @@ public class Player {
             }
         }
         return false;
+    }
+
+    private void changeResultText() {
+        if(resultText != null) {
+            int count = 0;
+            for(EditText editText : editTextList) {
+                try {
+                    /*
+                    * Extract the value from the edit text and convert it to
+                    * an integer, may produce NumberFormatException
+                     * */
+                    int value = Integer.parseInt(editText.getText().toString());
+
+                    if(value < min) min = value;
+                    if(value > max) max = value;
+
+                    count += value;
+                } catch (NumberFormatException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            totalShoots = count;
+            resultText.setText(String.valueOf(count));
+        }
+    }
+
+    /**
+    * Convert to GSON
+    * */
+
+    public PlayerGson toGson() {
+        return new PlayerGson(name, getAvgShoots(), min, max);
+    }
+
+    public float getAvgShoots() {
+        return (float) totalShoots / courseCount;
     }
 }
