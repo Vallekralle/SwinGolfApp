@@ -95,7 +95,7 @@ public class Player {
     * */
 
     public PlayerGson toGson() {
-        return new PlayerGson(name, getAvgShoots(), min, max);
+        return new PlayerGson(name, totalShoots, getAvgShoots(), min, max);
     }
 
     public float getAvgShoots() {

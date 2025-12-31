@@ -13,7 +13,6 @@
     <!-- Create Game -->
     <string name="start_game">Start</string>
     <string name="game_name_edit_text">Game name</string>
-    <string name="date_edit_text">Date</string>
     <string name="holes_edit_text">Hole count</string>
     <string name="missing_game_name">The game name should not be empty!</string>
     <string name="missing_hole_count">The hole count should not be empty!</string>
@@ -24,8 +23,16 @@
     <string name="total">Total</string>
     <string name="save_game">Save Game</string>
     <string name="empty_fields">All fields must contain numbers between 1 and 99.</string>
+    <!-- Game Save Dialog -->
+    <string name="winner">The winner is</string>
+    <string name="draw">Draw</string>
+    <string name="stats">Player Stats:</string>
+    <string name="leave">Leave</string>
+    <string name="save_success">Successfully saved the game!</string>
     <!-- SharedPreferences -->
     <string name="preferences">preferences</string>
     <string name="player_count">player_count</string>
     <string name="player_name">player_</string>
+    <string name="game_count">game_count</string>
+    <string name="game_name">game_</string>
 </resources>

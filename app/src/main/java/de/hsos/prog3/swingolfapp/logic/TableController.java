@@ -1,30 +1,39 @@
 package de.hsos.prog3.swingolfapp.logic;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.text.Html;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import de.hsos.prog3.swingolfapp.R;
+import de.hsos.prog3.swingolfapp.activities.MainActivity;
 import de.hsos.prog3.swingolfapp.model.Player;
 import de.hsos.prog3.swingolfapp.model.TableInfo;
 import de.hsos.prog3.swingolfapp.model.gson.GameGson;
+import de.hsos.prog3.swingolfapp.model.gson.PlayerGson;
 
 public class TableController {
     public static final int CELL_WIDTH = 500;
@@ -65,7 +74,7 @@ public class TableController {
         displayResultRow(tableInfo.playerNames());
     }
 
-    public void saveGame() {
+    public boolean saveGame() {
         if(isSaveable()) {
             GameGson gameGson = new GameGson(
                     tableInfo.courseName(),
@@ -73,10 +82,12 @@ public class TableController {
                     getAllAvg(),
                     Arrays.stream(players).map(Player::toGson).collect(Collectors.toList())
             );
-            String serializedGame = new Gson().toJson(gameGson);
-            Log.i("GAME_AS_JSON", serializedGame);
+            saveSerializedGame(gameGson);
+            showResultDialog(gameGson);
+            return true;
         } else {
             Toast.makeText(activity, activity.getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
@@ -140,6 +151,108 @@ public class TableController {
         }
 
         return avgCount / players.length;
+    }
+
+    private void saveSerializedGame(GameGson gameGson) {
+        // Convert the Game object to a String formated in JSON
+        String serializedGame = new Gson().toJson(gameGson);
+
+        SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.preferences), MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        int gameCount = retrieveGameCount(sharedPref);
+
+        editor.putString(activity.getString(R.string.game_name) + gameCount, serializedGame);
+        editor.putInt(activity.getString(R.string.game_count), ++gameCount);
+        editor.apply();
+
+        Toast.makeText(activity, activity.getString(R.string.save_success), Toast.LENGTH_SHORT).show();
+    }
+
+    private int retrieveGameCount(SharedPreferences sharedPref) {
+        return sharedPref.getInt(activity.getString(R.string.game_count), 0);
+    }
+
+    /**
+    * End game dialog
+    * */
+
+    private void showResultDialog(GameGson gameGson) {
+        PlayerGson winner = findWinner(gameGson);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        View dialogView = inflater.inflate(R.layout.winner_dialog, null);
+        builder.setView(dialogView);
+
+        // Determine the winner
+        TextView winnerText = dialogView.findViewById(R.id.winnerTextView);
+
+        if (winner == null) {
+            winnerText.setText(activity.getString(R.string.draw));
+        } else {
+            winnerText.setText(
+                    String.format(
+                            "%s %s with %s shoots.",
+                            activity.getString(R.string.winner),
+                            winner.name(),
+                            winner.total()
+                    )
+            );
+        }
+
+        // Display player stats
+        TextView playerStats = dialogView.findViewById(R.id.playerStatsTextView);
+
+        playerStats.setText(
+                Html.fromHtml(
+                    gameGson.players().stream()
+                        .map(playerGson -> {
+                            String format = String.format(
+                                    "<b>%s</b> - Shoots in total: %d | Average shoot count: %.2f | Lowest: %d | Highest: %d<br><br>",
+                                    playerGson.name(),
+                                    playerGson.total(),
+                                    playerGson.avg(),
+                                    playerGson.min(),
+                                    playerGson.max()
+                            );
+                            return format;
+                        })
+                        .collect(Collectors.joining())
+                )
+        );
+
+        Button leaveBtn = dialogView.findViewById(R.id.leaveBtn);
+        leaveBtn.setOnClickListener(v -> {
+            activity.startActivity(new Intent(activity, MainActivity.class));
+        });
+
+        AlertDialog dialog = builder.create();
+
+        // Dialog shouldn't be closed by clicking outside the dialog
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+
+        dialog.show();
+    }
+
+    private PlayerGson findWinner(GameGson gameGson) {
+        PlayerGson winner = gameGson.players().get(0);
+        boolean draw = false;
+
+        for(PlayerGson player : gameGson.players()) {
+            if(player == winner) {
+                continue;
+            } else if(player.total() < winner.total()) {
+                winner = player;
+                draw = false;
+            } else if(player.total() == winner.total()) {
+                draw = true;
+            }
+        }
+
+        return draw ? null : winner;
     }
 
     /**
