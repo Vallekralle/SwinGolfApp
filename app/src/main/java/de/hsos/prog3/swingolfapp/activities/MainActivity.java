@@ -1,38 +1,34 @@
 package de.hsos.prog3.swingolfapp.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
 
-import de.hsos.prog3.swingolfapp.R;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends GolfActivity {
+import java.io.Serializable;
+
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        initButtons();
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    private void initButtons() {
-        Button addNewPlayerBtn = findViewById(R.id.addNewPlayerBtn);
-        Button createGameBtn = findViewById(R.id.createGameBtn);
-        Button showAllGamesBtn = findViewById(R.id.showAllGamesBtn);
+    public static void startActivity(Activity currentActivity, Class<?> nextActivity) {
+        Intent intent = new Intent(currentActivity, nextActivity);
+        currentActivity.startActivity(intent);
+        currentActivity.finish();
+    }
 
-        addNewPlayerBtn.setOnClickListener(v ->
-                startActivity(
-                        MainActivity.this, CreatePlayerActivity.class
-                )
-        );
-        createGameBtn.setOnClickListener(v ->
-                startActivity(
-                        MainActivity.this, CreateGameActivity.class
-                )
-        );
-        showAllGamesBtn.setOnClickListener(v ->
-                startActivity(
-                        MainActivity.this, GameHistoryActivity.class
-                )
-        );
+    public static void startActivity(Activity currentActivity, Class<?> nextActivity, Serializable extra) {
+        Intent intent = new Intent(currentActivity, nextActivity);
+        // Add extras to the intent
+        intent.putExtra("extra", extra);
+        currentActivity.startActivity(intent);
+        currentActivity.finish();
     }
 }

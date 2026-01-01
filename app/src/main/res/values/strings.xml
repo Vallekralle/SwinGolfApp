@@ -29,6 +29,8 @@
     <string name="stats">Player Stats:</string>
     <string name="leave">Leave</string>
     <string name="save_success">Successfully saved the game!</string>
+    <!-- Game History -->
+    <string name="history_title">Your saved games</string>
     <!-- SharedPreferences -->
     <string name="preferences">preferences</string>
     <string name="player_count">player_count</string>

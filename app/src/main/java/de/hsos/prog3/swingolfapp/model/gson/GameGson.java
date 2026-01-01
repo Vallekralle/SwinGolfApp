@@ -1,5 +1,5 @@
 package de.hsos.prog3.swingolfapp.model.gson;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public record GameGson(String courseName, int holeCount, float averageShots, List<PlayerGson> players) { }
+public record GameGson(String courseName, int holeCount, float averageShots, ArrayList<PlayerGson> players) { }

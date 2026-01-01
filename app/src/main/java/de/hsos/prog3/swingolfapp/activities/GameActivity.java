@@ -5,10 +5,10 @@ import android.widget.Button;
 
 import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.logic.TableController;
-import de.hsos.prog3.swingolfapp.model.GameInfo;
+import de.hsos.prog3.swingolfapp.adapter.GameInfoHolder;
 import de.hsos.prog3.swingolfapp.model.TableInfo;
 
-public class GameActivity extends GolfActivity {
+public class GameActivity extends MainActivity {
     private TableController tableController;
 
     private String[] playerNames;
@@ -22,10 +22,10 @@ public class GameActivity extends GolfActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-            GameInfo gameInfo = (GameInfo) extras.getSerializable("extra");
-            playerNames = gameInfo.players().toArray(new String[0]);
-            courseName = gameInfo.gameName();
-            courseCount = gameInfo.holeCount();
+            GameInfoHolder gameInfoHolder = (GameInfoHolder) extras.getSerializable("extra");
+            playerNames = gameInfoHolder.players().toArray(new String[0]);
+            courseName = gameInfoHolder.gameName();
+            courseCount = gameInfoHolder.holeCount();
         }
 
         initButton();
@@ -40,7 +40,7 @@ public class GameActivity extends GolfActivity {
         Button saveGameBtn = findViewById(R.id.saveGameBtn);
 
         gameBackBtn.setOnClickListener(v -> {
-            startActivity(GameActivity.this, MainActivity.class);
+            startActivity(GameActivity.this, HomeActivity.class);
         });
 
         saveGameBtn.setOnClickListener(v -> {

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import de.hsos.prog3.swingolfapp.R;
 
-public class CreatePlayerActivity extends GolfActivity {
+public class CreatePlayerActivity extends MainActivity {
     private EditText playerNameEditText;
 
     @Override
@@ -26,7 +26,7 @@ public class CreatePlayerActivity extends GolfActivity {
         Button savePlayerBtn = findViewById(R.id.savePlayerBtn);
 
         createPlayerBackBtn.setOnClickListener(v -> {
-            startActivity(CreatePlayerActivity.this, MainActivity.class);
+            startActivity(CreatePlayerActivity.this, HomeActivity.class);
         });
 
         savePlayerBtn.setOnClickListener(v -> {

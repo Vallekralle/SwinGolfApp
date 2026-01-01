@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import de.hsos.prog3.swingolfapp.R;
-import de.hsos.prog3.swingolfapp.activities.MainActivity;
+import de.hsos.prog3.swingolfapp.activities.HomeActivity;
 import de.hsos.prog3.swingolfapp.model.Player;
 import de.hsos.prog3.swingolfapp.model.TableInfo;
 import de.hsos.prog3.swingolfapp.model.gson.GameGson;
@@ -80,7 +80,7 @@ public class TableController {
                     tableInfo.courseName(),
                     tableInfo.courseCount(),
                     getAllAvg(),
-                    Arrays.stream(players).map(Player::toGson).collect(Collectors.toList())
+                    (java.util.ArrayList<PlayerGson>) Arrays.stream(players).map(Player::toGson).collect(Collectors.toList())
             );
             saveSerializedGame(gameGson);
             showResultDialog(gameGson);
@@ -225,7 +225,7 @@ public class TableController {
 
         Button leaveBtn = dialogView.findViewById(R.id.leaveBtn);
         leaveBtn.setOnClickListener(v -> {
-            activity.startActivity(new Intent(activity, MainActivity.class));
+            activity.startActivity(new Intent(activity, HomeActivity.class));
         });
 
         AlertDialog dialog = builder.create();
@@ -237,7 +237,7 @@ public class TableController {
         dialog.show();
     }
 
-    private PlayerGson findWinner(GameGson gameGson) {
+    public static PlayerGson findWinner(GameGson gameGson) {
         PlayerGson winner = gameGson.players().get(0);
         boolean draw = false;
 

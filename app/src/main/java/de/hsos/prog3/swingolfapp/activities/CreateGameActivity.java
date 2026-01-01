@@ -13,10 +13,10 @@ import java.util.ArrayList;
 
 import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.adapter.PlayerItemAdapter;
-import de.hsos.prog3.swingolfapp.model.GameInfo;
-import de.hsos.prog3.swingolfapp.model.PlayerInfoHolder;
+import de.hsos.prog3.swingolfapp.adapter.GameInfoHolder;
+import de.hsos.prog3.swingolfapp.adapter.PlayerInfoHolder;
 
-public class CreateGameActivity extends GolfActivity {
+public class CreateGameActivity extends MainActivity {
     private ArrayList<PlayerInfoHolder> playerInfoHolderList;
     private PlayerItemAdapter adapter;
 
@@ -28,7 +28,7 @@ public class CreateGameActivity extends GolfActivity {
 
         initButtons();
         retrievePlayersFromSharedPreferences();
-        showPlayerList();
+        initPlayerListAdapter();
     }
 
     private void initButtons() {
@@ -36,7 +36,7 @@ public class CreateGameActivity extends GolfActivity {
         Button startGameBtn = findViewById(R.id.startGameBtn);
 
         createGameBackBtn.setOnClickListener(v -> {
-            startActivity(CreateGameActivity.this, MainActivity.class);
+            startActivity(CreateGameActivity.this, HomeActivity.class);
         });
 
         startGameBtn.setOnClickListener(v -> {
@@ -62,9 +62,9 @@ public class CreateGameActivity extends GolfActivity {
             return;
         }
 
-        GameInfo gameInfo = new GameInfo(gameName, holeCount, players);
+        GameInfoHolder gameInfoHolder = new GameInfoHolder(gameName, holeCount, players);
 
-        startActivity(CreateGameActivity.this, GameActivity.class, gameInfo);
+        startActivity(CreateGameActivity.this, GameActivity.class, gameInfoHolder);
     }
 
     private String retrieveGameName() {
@@ -120,7 +120,7 @@ public class CreateGameActivity extends GolfActivity {
         }
     }
 
-    private void showPlayerList() {
+    private void initPlayerListAdapter() {
         ListView playerListView = findViewById(R.id.playerListView);
 
         adapter = new PlayerItemAdapter(

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.hsos.prog3.swingolfapp.R;
-import de.hsos.prog3.swingolfapp.model.PlayerInfoHolder;
 
 public class PlayerItemAdapter extends ArrayAdapter<PlayerInfoHolder> {
     public PlayerItemAdapter(Context context, int resource, List<PlayerInfoHolder> playerInfoHolderList) {
@@ -24,7 +23,7 @@ public class PlayerItemAdapter extends ArrayAdapter<PlayerInfoHolder> {
 
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.player_listview_item, parent, false
+                    R.layout.player_list_view_item, parent, false
             );
         }
 

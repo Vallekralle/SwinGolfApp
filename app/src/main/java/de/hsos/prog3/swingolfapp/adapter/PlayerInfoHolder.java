@@ -1,4 +1,4 @@
-package de.hsos.prog3.swingolfapp.model;
+package de.hsos.prog3.swingolfapp.adapter;
 
 public class PlayerInfoHolder {
     private String name;
