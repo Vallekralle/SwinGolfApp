@@ -2,7 +2,7 @@ package de.hsos.prog3.swingolfapp.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.logic.PlayerNameStore;
@@ -39,7 +39,7 @@ public class CreatePlayerActivity extends MainActivity {
     }
 
     private void savePlayerName() {
-        TextView playerNameEditText = findViewById(R.id.playerNameEditText);
+        EditText playerNameEditText = findViewById(R.id.playerNameEditText);
         String name = playerNameEditText.getText().toString().trim();
 
         playerNameStore.save(name);

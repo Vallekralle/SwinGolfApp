@@ -23,14 +23,11 @@ public class PlayerNameStore {
                     Toast.LENGTH_SHORT
             ).show();
         }
+        Toast.makeText(activity, activity.getString(R.string.player_name_error), Toast.LENGTH_SHORT).show();
     }
 
     private boolean isValid(String name) {
-        if(name.isEmpty()) {
-            Toast.makeText(activity, activity.getString(R.string.player_name_error), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+        return !name.isEmpty();
     }
 
     private void writeToStorage(String name) {
@@ -42,6 +39,8 @@ public class PlayerNameStore {
 
         int playerCount = retrievePlayerCount(sharedPref);
 
+        // <"player_0", "Dalina">
+        // <"player_1", "Valentin">
         editor.putString(activity.getString(R.string.player_name) + playerCount, name);
         editor.putInt(activity.getString(R.string.player_count), ++playerCount);
         editor.apply();
