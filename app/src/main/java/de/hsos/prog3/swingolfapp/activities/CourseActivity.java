@@ -52,7 +52,7 @@ public class CourseActivity extends MainActivity {
     private void retrieveExtras() throws RuntimeException {
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
-            throw new RuntimeException("asdf");
+            throw new RuntimeException("Expected extras, but received null.");
         }
 
         CourseInfoHolder courseInfoHolder = (CourseInfoHolder) extras.getSerializable("extra");
