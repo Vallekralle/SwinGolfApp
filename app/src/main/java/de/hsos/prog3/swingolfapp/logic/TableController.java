@@ -32,7 +32,7 @@ import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.activities.HomeActivity;
 import de.hsos.prog3.swingolfapp.model.Player;
 import de.hsos.prog3.swingolfapp.model.TableInfo;
-import de.hsos.prog3.swingolfapp.model.gson.GameGson;
+import de.hsos.prog3.swingolfapp.model.gson.CourseGson;
 import de.hsos.prog3.swingolfapp.model.gson.PlayerGson;
 
 public class TableController {
@@ -76,14 +76,14 @@ public class TableController {
 
     public boolean saveGame() {
         if(isSaveable()) {
-            GameGson gameGson = new GameGson(
+            CourseGson courseGson = new CourseGson(
                     tableInfo.courseName(),
                     tableInfo.courseCount(),
                     getAllAvg(),
                     (java.util.ArrayList<PlayerGson>) Arrays.stream(players).map(Player::toGson).collect(Collectors.toList())
             );
-            saveSerializedGame(gameGson);
-            showResultDialog(gameGson);
+            saveSerializedGame(courseGson);
+            showResultDialog(courseGson);
             return true;
         } else {
             Toast.makeText(activity, activity.getString(R.string.empty_fields), Toast.LENGTH_SHORT).show();
@@ -153,9 +153,9 @@ public class TableController {
         return avgCount / players.length;
     }
 
-    private void saveSerializedGame(GameGson gameGson) {
+    private void saveSerializedGame(CourseGson courseGson) {
         // Convert the Game object to a String formated in JSON
-        String serializedGame = new Gson().toJson(gameGson);
+        String serializedGame = new Gson().toJson(courseGson);
 
         SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.preferences), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -177,8 +177,8 @@ public class TableController {
     * End game dialog
     * */
 
-    private void showResultDialog(GameGson gameGson) {
-        PlayerGson winner = findWinner(gameGson);
+    private void showResultDialog(CourseGson courseGson) {
+        PlayerGson winner = findWinner(courseGson);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -207,7 +207,7 @@ public class TableController {
 
         playerStats.setText(
                 Html.fromHtml(
-                    gameGson.players().stream()
+                    courseGson.players().stream()
                         .map(playerGson -> {
                             String format = String.format(
                                     "<b>%s</b> - Shoots in total: %d | Average shoot count: %.2f | Lowest: %d | Highest: %d<br><br>",
@@ -237,11 +237,11 @@ public class TableController {
         dialog.show();
     }
 
-    public static PlayerGson findWinner(GameGson gameGson) {
-        PlayerGson winner = gameGson.players().get(0);
+    public static PlayerGson findWinner(CourseGson courseGson) {
+        PlayerGson winner = courseGson.players().get(0);
         boolean draw = false;
 
-        for(PlayerGson player : gameGson.players()) {
+        for(PlayerGson player : courseGson.players()) {
             if(player == winner) {
                 continue;
             } else if(player.total() < winner.total()) {

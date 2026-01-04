@@ -11,12 +11,12 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 import de.hsos.prog3.swingolfapp.R;
-import de.hsos.prog3.swingolfapp.adapter.GameItemAdapter;
-import de.hsos.prog3.swingolfapp.model.gson.GameGson;
+import de.hsos.prog3.swingolfapp.adapter.CourseItemAdapter;
+import de.hsos.prog3.swingolfapp.model.gson.CourseGson;
 
-public class GameHistoryActivity extends MainActivity {
+public class CourseHistoryActivity extends MainActivity {
     private Gson gson;
-    private ArrayList<GameGson> gameInfoHolderList;
+    private ArrayList<CourseGson> gameInfoHolderList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class GameHistoryActivity extends MainActivity {
         setContentView(R.layout.activity_game_history);
 
         init();
-        displaySavedGames();
+        displaySavedGamesFromStorage();
     }
 
     private void init() {
@@ -39,20 +39,20 @@ public class GameHistoryActivity extends MainActivity {
         Button gameHistoryBackBtn = findViewById(R.id.gameHistoryBackBtn);
 
         gameHistoryBackBtn.setOnClickListener(v ->
-                startActivity(GameHistoryActivity.this, HomeActivity.class)
+                startActivity(CourseHistoryActivity.this, HomeActivity.class)
         );
     }
 
     private void initAdapter() {
         ListView gameHistoryListView = findViewById(R.id.gameHistoryListView);
 
-        GameItemAdapter adapter = new GameItemAdapter(
+        CourseItemAdapter adapter = new CourseItemAdapter(
                 this, 0, gameInfoHolderList
         );
         gameHistoryListView.setAdapter(adapter);
     }
 
-    private void displaySavedGames() {
+    private void displaySavedGamesFromStorage() {
         SharedPreferences sharedPref = getSharedPreferences(
                 getString(R.string.preferences), Context.MODE_PRIVATE
         );
@@ -63,8 +63,8 @@ public class GameHistoryActivity extends MainActivity {
             String gameJSON = sharedPref.getString(
                     getString(R.string.game_name) + count, "Error"
             );
-            GameGson gameGson = gson.fromJson(gameJSON, GameGson.class);
-            gameInfoHolderList.add(gameGson);
+            CourseGson courseGson = gson.fromJson(gameJSON, CourseGson.class);
+            gameInfoHolderList.add(courseGson);
         }
     }
 }

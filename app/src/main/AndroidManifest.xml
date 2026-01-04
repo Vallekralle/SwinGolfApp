@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SwinGolfApp">
         <activity
-            android:name=".activities.GameActivity"
+            android:name=".activities.CourseActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.GameHistoryActivity"
+            android:name=".activities.CourseHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CreateGameActivity"
+            android:name=".activities.CreateCourseActivity"
             android:exported="false" />
         <activity
             android:name=".activities.CreatePlayerActivity"

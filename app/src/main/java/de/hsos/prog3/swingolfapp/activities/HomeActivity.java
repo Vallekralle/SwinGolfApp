@@ -26,12 +26,12 @@ public class HomeActivity extends MainActivity {
         );
         createGameBtn.setOnClickListener(v ->
                 startActivity(
-                        HomeActivity.this, CreateGameActivity.class
+                        HomeActivity.this, CreateCourseActivity.class
                 )
         );
         showAllGamesBtn.setOnClickListener(v ->
                 startActivity(
-                        HomeActivity.this, GameHistoryActivity.class
+                        HomeActivity.this, CourseHistoryActivity.class
                 )
         );
     }

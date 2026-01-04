@@ -17,28 +17,28 @@ import java.util.stream.Collectors;
 
 import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.logic.TableController;
-import de.hsos.prog3.swingolfapp.model.gson.GameGson;
+import de.hsos.prog3.swingolfapp.model.gson.CourseGson;
 import de.hsos.prog3.swingolfapp.model.gson.PlayerGson;
 
-public class GameItemAdapter extends ArrayAdapter<GameGson> {
-    public GameItemAdapter(Context context, int resource, List<GameGson> gameInfoHolderList) {
+public class CourseItemAdapter extends ArrayAdapter<CourseGson> {
+    public CourseItemAdapter(Context context, int resource, List<CourseGson> gameInfoHolderList) {
         super(context, resource, gameInfoHolderList);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        GameGson gameGson = getItem(position);
+        CourseGson courseGson = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.game_list_view_item, parent, false
             );
 
-            convertView.setOnClickListener(v -> showDetailsDialog(gameGson));
+            convertView.setOnClickListener(v -> showDetailsDialog(courseGson));
         }
 
-        String name = gameGson.courseName();
-        int holeCount = gameGson.holeCount();
+        String name = courseGson.courseName();
+        int holeCount = courseGson.holeCount();
 
         TextView gameInfo = convertView.findViewById(R.id.gameInfoTextView);
         if (gameInfo != null && name != null) {
@@ -49,8 +49,8 @@ public class GameItemAdapter extends ArrayAdapter<GameGson> {
         return convertView;
     }
 
-    private void showDetailsDialog(GameGson gameGson) {
-        PlayerGson winner = TableController.findWinner(gameGson);
+    private void showDetailsDialog(CourseGson courseGson) {
+        PlayerGson winner = TableController.findWinner(courseGson);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -79,7 +79,7 @@ public class GameItemAdapter extends ArrayAdapter<GameGson> {
 
         playerStats.setText(
                 Html.fromHtml(
-                        gameGson.players().stream()
+                        courseGson.players().stream()
                                 .map(playerGson -> {
                                     String format = String.format(
                                             "<b>%s</b> - Shoots in total: %d | Average shoot count: %.2f | Lowest: %d | Highest: %d<br><br>",

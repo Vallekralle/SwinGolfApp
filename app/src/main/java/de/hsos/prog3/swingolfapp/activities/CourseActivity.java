@@ -5,10 +5,10 @@ import android.widget.Button;
 
 import de.hsos.prog3.swingolfapp.R;
 import de.hsos.prog3.swingolfapp.logic.TableController;
-import de.hsos.prog3.swingolfapp.adapter.GameInfoHolder;
+import de.hsos.prog3.swingolfapp.adapter.CourseInfoHolder;
 import de.hsos.prog3.swingolfapp.model.TableInfo;
 
-public class GameActivity extends MainActivity {
+public class CourseActivity extends MainActivity {
     private TableController tableController;
 
     private String[] playerNames;
@@ -29,7 +29,7 @@ public class GameActivity extends MainActivity {
             retrieveExtras();
         } catch (RuntimeException e) {
             // Return to the Home screen if no extras were passed
-            startActivity(GameActivity.this, HomeActivity.class);
+            startActivity(CourseActivity.this, HomeActivity.class);
         }
         initButtons();
     }
@@ -39,7 +39,7 @@ public class GameActivity extends MainActivity {
         Button saveGameBtn = findViewById(R.id.saveGameBtn);
 
         gameBackBtn.setOnClickListener(v -> {
-            startActivity(GameActivity.this, HomeActivity.class);
+            startActivity(CourseActivity.this, HomeActivity.class);
         });
 
         saveGameBtn.setOnClickListener(v -> {
@@ -55,10 +55,10 @@ public class GameActivity extends MainActivity {
             throw new RuntimeException("asdf");
         }
 
-        GameInfoHolder gameInfoHolder = (GameInfoHolder) extras.getSerializable("extra");
-        playerNames = gameInfoHolder.players().toArray(new String[0]);
-        courseName = gameInfoHolder.gameName();
-        courseCount = gameInfoHolder.holeCount();
+        CourseInfoHolder courseInfoHolder = (CourseInfoHolder) extras.getSerializable("extra");
+        playerNames = courseInfoHolder.players().toArray(new String[0]);
+        courseName = courseInfoHolder.gameName();
+        courseCount = courseInfoHolder.holeCount();
     }
 
     private void createTable() {
