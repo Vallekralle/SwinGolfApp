@@ -3,7 +3,6 @@ package de.hsos.prog3.swingolfapp.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -35,13 +34,11 @@ public class CreateGameActivity extends MainActivity {
         Button createGameBackBtn = findViewById(R.id.createGameBackBtn);
         Button startGameBtn = findViewById(R.id.startGameBtn);
 
-        createGameBackBtn.setOnClickListener(v -> {
-            startActivity(CreateGameActivity.this, HomeActivity.class);
-        });
+        createGameBackBtn.setOnClickListener(v ->
+            startActivity(CreateGameActivity.this, HomeActivity.class)
+        );
 
-        startGameBtn.setOnClickListener(v -> {
-            startGame();
-        });
+        startGameBtn.setOnClickListener(v -> startGame());
     }
 
     private void startGame() {
@@ -97,7 +94,6 @@ public class CreateGameActivity extends MainActivity {
         for(int i = 0; i < adapter.getCount(); i++) {
             PlayerInfoHolder infoHolder = adapter.getItem(i);
             if(infoHolder != null && infoHolder.isChecked()) {
-                Log.i("SELECTED_PLAYERS", adapter.getItem(i).getName());
                 selectedPlayers.add(infoHolder.getName());
             }
         }
@@ -124,7 +120,7 @@ public class CreateGameActivity extends MainActivity {
         ListView playerListView = findViewById(R.id.playerListView);
 
         adapter = new PlayerItemAdapter(
-                getApplicationContext(), 0, playerInfoHolderList
+               this, 0, playerInfoHolderList
         );
         playerListView.setAdapter(adapter);
     }

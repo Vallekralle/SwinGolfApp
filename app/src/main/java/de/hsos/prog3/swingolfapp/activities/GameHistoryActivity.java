@@ -16,8 +16,6 @@ import de.hsos.prog3.swingolfapp.model.gson.GameGson;
 
 public class GameHistoryActivity extends MainActivity {
     private Gson gson;
-
-    private GameItemAdapter adapter;
     private ArrayList<GameGson> gameInfoHolderList;
 
     @Override
@@ -26,26 +24,35 @@ public class GameHistoryActivity extends MainActivity {
         setContentView(R.layout.activity_game_history);
 
         init();
-        initGameListViewAdapter();
-        initButtons();
-
-        retrieveGamesFromSharedPreferences();
+        displaySavedGames();
     }
 
     private void init() {
         gson = new Gson();
         gameInfoHolderList = new ArrayList<>();
+
+        initButtons();
+        initAdapter();
     }
 
     private void initButtons() {
         Button gameHistoryBackBtn = findViewById(R.id.gameHistoryBackBtn);
 
-        gameHistoryBackBtn.setOnClickListener(v -> {
-            startActivity(GameHistoryActivity.this, HomeActivity.class);
-        });
+        gameHistoryBackBtn.setOnClickListener(v ->
+                startActivity(GameHistoryActivity.this, HomeActivity.class)
+        );
     }
 
-    private void retrieveGamesFromSharedPreferences() {
+    private void initAdapter() {
+        ListView gameHistoryListView = findViewById(R.id.gameHistoryListView);
+
+        GameItemAdapter adapter = new GameItemAdapter(
+                this, 0, gameInfoHolderList
+        );
+        gameHistoryListView.setAdapter(adapter);
+    }
+
+    private void displaySavedGames() {
         SharedPreferences sharedPref = getSharedPreferences(
                 getString(R.string.preferences), Context.MODE_PRIVATE
         );
@@ -59,14 +66,5 @@ public class GameHistoryActivity extends MainActivity {
             GameGson gameGson = gson.fromJson(gameJSON, GameGson.class);
             gameInfoHolderList.add(gameGson);
         }
-    }
-
-    private void initGameListViewAdapter() {
-        ListView gameHistoryListView = findViewById(R.id.gameHistoryListView);
-
-        adapter = new GameItemAdapter(
-                this, 0, gameInfoHolderList
-        );
-        gameHistoryListView.setAdapter(adapter);
     }
 }

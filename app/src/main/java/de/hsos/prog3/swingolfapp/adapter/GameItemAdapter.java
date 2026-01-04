@@ -66,7 +66,7 @@ public class GameItemAdapter extends ArrayAdapter<GameGson> {
         } else {
             winnerText.setText(
                     String.format(
-                            "%s %s with %s shoots.",
+                            "%s %s with %s shots.",
                             getContext().getString(R.string.winner),
                             winner.name(),
                             winner.total()

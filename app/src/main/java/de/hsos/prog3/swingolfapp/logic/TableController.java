@@ -194,7 +194,7 @@ public class TableController {
         } else {
             winnerText.setText(
                     String.format(
-                            "%s %s with %s shoots.",
+                            "%s %s with %s shots.",
                             activity.getString(R.string.winner),
                             winner.name(),
                             winner.total()

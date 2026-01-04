@@ -14,19 +14,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Make window fullscreen
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     public static void startActivity(Activity currentActivity, Class<?> nextActivity) {
+        // Starts an new activity
         Intent intent = new Intent(currentActivity, nextActivity);
         currentActivity.startActivity(intent);
         currentActivity.finish();
     }
 
     public static void startActivity(Activity currentActivity, Class<?> nextActivity, Serializable extra) {
+        // Starts a new activity and passes serialized extras
         Intent intent = new Intent(currentActivity, nextActivity);
-        // Add extras to the intent
         intent.putExtra("extra", extra);
         currentActivity.startActivity(intent);
         currentActivity.finish();

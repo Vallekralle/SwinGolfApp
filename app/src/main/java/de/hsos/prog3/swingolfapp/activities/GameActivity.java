@@ -20,22 +20,21 @@ public class GameActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Bundle extras = getIntent().getExtras();
-        if(extras != null) {
-            GameInfoHolder gameInfoHolder = (GameInfoHolder) extras.getSerializable("extra");
-            playerNames = gameInfoHolder.players().toArray(new String[0]);
-            courseName = gameInfoHolder.gameName();
-            courseCount = gameInfoHolder.holeCount();
-        }
-
-        initButton();
-
-        TableInfo tableInfo = new TableInfo(playerNames, courseName, courseCount);
-        tableController = new TableController(this, tableInfo);
-        tableController.displayGameTable();
+        init();
+        createTable();
     }
 
-    private void initButton() {
+    private void init() {
+        try {
+            retrieveExtras();
+        } catch (RuntimeException e) {
+            // Return to the Home screen if no extras were passed
+            startActivity(GameActivity.this, HomeActivity.class);
+        }
+        initButtons();
+    }
+
+    private void initButtons() {
         Button gameBackBtn = findViewById(R.id.gameBackBtn);
         Button saveGameBtn = findViewById(R.id.saveGameBtn);
 
@@ -48,5 +47,23 @@ public class GameActivity extends MainActivity {
                 saveGameBtn.setEnabled(false);
             }
         });
+    }
+
+    private void retrieveExtras() throws RuntimeException {
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            throw new RuntimeException("asdf");
+        }
+
+        GameInfoHolder gameInfoHolder = (GameInfoHolder) extras.getSerializable("extra");
+        playerNames = gameInfoHolder.players().toArray(new String[0]);
+        courseName = gameInfoHolder.gameName();
+        courseCount = gameInfoHolder.holeCount();
+    }
+
+    private void createTable() {
+        TableInfo tableInfo = new TableInfo(playerNames, courseName, courseCount);
+        tableController = new TableController(this, tableInfo);
+        tableController.displayGameTable();
     }
 }
